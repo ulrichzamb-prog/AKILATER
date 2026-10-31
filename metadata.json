@@ -1,0 +1,7 @@
+{
+  "name": "Email Template Studio",
+  "description": "Convertissez vos images, maquettes et PDF en templates d'emails HTML professionnels, compatibles Gmail et modifiables en direct.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
