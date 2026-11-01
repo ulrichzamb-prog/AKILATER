@@ -100,7 +100,7 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           imageBase64: document.dataUrl,
-          mimeType: document.type === 'pdf' ? 'application/pdf' : 'image/png',
+          mimeType: document.dataUrl.startsWith('data:image/jpeg') ? 'image/jpeg' : 'image/png',
         }),
       });
 

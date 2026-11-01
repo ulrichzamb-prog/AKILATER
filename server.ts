@@ -77,17 +77,30 @@ Réponds UNIQUEMENT en JSON valide avec la structure suivante :
   ]
 }`;
 
-      const rawBase64 = (imageBase64 || '').replace(/^data:[^;]+;base64,/, '');
+      let effectiveMime = mimeType || 'image/png';
+      let rawBase64 = imageBase64 || '';
+      const dataUriMatch = rawBase64.match(/^data:([^;]+);base64,(.+)$/);
+      if (dataUriMatch) {
+        effectiveMime = dataUriMatch[1];
+        rawBase64 = dataUriMatch[2];
+      } else {
+        rawBase64 = rawBase64.replace(/^data:[^;]+;base64,/, '');
+      }
+
+      // Fallback mimeType if SVG or unsupported format
+      if (effectiveMime.includes('svg') || !effectiveMime.startsWith('image/')) {
+        effectiveMime = 'image/png';
+      }
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.8-flash',
         contents: [
           {
             role: 'user',
             parts: [
               {
                 inlineData: {
-                  mimeType: mimeType || 'image/png',
+                  mimeType: effectiveMime,
                   data: rawBase64,
                 },
               },
